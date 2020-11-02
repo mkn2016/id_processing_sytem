@@ -31,7 +31,7 @@ class CoursesPage(QWidget, RethinkDBOperations):
         self.__item_id, \
         self.__button_widget, \
         self.__button_layout, \
-        self.__cancel_btn = repeat(None, 15)
+        self.__cancel_btn = repeat(None, 16)
         self.__edit_event = False
         self.__add_event = True
 
@@ -251,9 +251,6 @@ class CoursesPage(QWidget, RethinkDBOperations):
         self.__level.currentTextChanged.connect(self.on_current_text_changed)
 
     def on_current_text_changed(self, arg1) -> NoReturn:
-        print(arg1)
-        print(self.__add_event)
-        print(self.__edit_event)
         if self.__edit_event:
             if arg1 == "Degree":
                 self.__abbreviation.insertItems(0, degree_programmes)
