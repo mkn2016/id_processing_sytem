@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}
+    Vivo Id System
+{% endblock %}
+
+{% block nav %}
+<nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+  <div class="flex items-center flex-shrink-0 text-white mr-6">
+      <div class="fill-current h-10 w-10 mr-2">
+          <img src="/static/images/vivo_logo_white.png" alt="" width="250" height="250">
+      </div>
+  </div>
+  <div class="block lg:hidden">
+    <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+    </button>
+  </div>
+  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="text-sm lg:flex-grow">
+    </div>
+    <div>
+        <a href="{{ url_for('auth.logout')}}" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Logout</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block body %}
+
+<div id="profile" class="bg-grey-lighter h-screen font-sans" style="background-color: #F5F5F5">
+    <div class="container mx-auto h-full flex justify-center items-center">
+        <div lg:w-1/3" sm:w-48>
+            <h1>
+                <span style="color: black; font-weight: bold">Student: </span><span style="color: black">{{ student.first_name }} {{ student.surname }}</span>
+            </h1>
+            <h1>
+                <span style="color: black; font-weight: bold">Student ID: </span><span style="color: black">{{ student.id }}</span>
+            </h1>
+            <h1>
+                <span style="color: black; font-weight: bold">Status: </span><span style="color: black">{{ student.status}}</span>
+            </h1>
+            <img src="{{ url_for('auth.send_image', image=image_name)}}">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -1,0 +1,45 @@
+2020-09-10T12:01:16.622831185 0.366389s notice: Recursively removing directory /home/platoschild/PythonProjects/student_management_system/src/rethinkdb_data/tmp
+2020-09-10T12:01:16.690629403 0.434192s notice: Initializing directory /home/platoschild/PythonProjects/student_management_system/src/rethinkdb_data
+2020-09-10T12:01:16.691153615 0.434711s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/platoschild/PythonProjects/student_management_system/src/rethinkdb_data' did not already exist or is empty.)
+2020-09-10T12:01:16.691232824 0.434790s notice: Running rethinkdb 2.4.1~0focal (CLANG 10.0.0 )...
+2020-09-10T12:01:16.696641435 0.440201s notice: Running on Linux 5.4.0-42-generic x86_64
+2020-09-10T12:01:16.696758589 0.440316s notice: Loading data from directory /home/platoschild/PythonProjects/student_management_system/src/rethinkdb_data
+2020-09-10T12:01:17.603098595 1.346656s info: Automatically using cache size of 1307 MB
+2020-09-10T12:01:17.622776217 1.366334s notice: Listening for intracluster connections on port 29015
+2020-09-10T12:01:17.662313255 1.405871s notice: Listening for client driver connections on port 28015
+2020-09-10T12:01:17.662435936 1.405993s notice: Listening for administrative HTTP connections on port 8080
+2020-09-10T12:01:17.662444446 1.406002s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2020-09-10T12:01:17.662451070 1.406008s notice: Listening on driver addresses: 127.0.0.1, ::1
+2020-09-10T12:01:17.662468739 1.406026s notice: Listening on http addresses: 127.0.0.1, ::1
+2020-09-10T12:01:17.662478736 1.406036s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2020-09-10T12:01:17.662491641 1.406049s notice: Server ready, "platoschild_druidbot_rqh" 94d30997-da47-4f56-a32d-862476f7b883
+2020-09-10T12:01:26.304871514 10.048429s info: Table 675fa96f-ae66-4288-ba20-6ea48dfde884: Starting a new Raft election for term 1.
+2020-09-10T12:01:26.305105757 10.048663s info: Table 675fa96f-ae66-4288-ba20-6ea48dfde884: Added replica on this server.
+2020-09-10T12:01:26.567345749 10.310903s info: Table 675fa96f-ae66-4288-ba20-6ea48dfde884: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-10T12:01:31.706873051 15.450431s info: Table 6e87a733-5342-4392-8069-b6a59138a457: Starting a new Raft election for term 1.
+2020-09-10T12:01:31.707139017 15.450696s info: Table 6e87a733-5342-4392-8069-b6a59138a457: Added replica on this server.
+2020-09-10T12:01:31.885093958 15.628651s info: Table 6e87a733-5342-4392-8069-b6a59138a457: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-10T12:01:36.923817225 20.667375s info: Table dca1145a-02a2-4646-a678-711574ef7fd4: Starting a new Raft election for term 1.
+2020-09-10T12:01:36.924982926 20.668541s info: Table dca1145a-02a2-4646-a678-711574ef7fd4: Added replica on this server.
+2020-09-10T12:01:37.097794110 20.841351s info: Table dca1145a-02a2-4646-a678-711574ef7fd4: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-10T12:01:41.960902814 25.704460s info: Table 26e8a11e-9b24-42a0-b869-85223dac94b4: Starting a new Raft election for term 1.
+2020-09-10T12:01:41.961152520 25.704710s info: Table 26e8a11e-9b24-42a0-b869-85223dac94b4: Added replica on this server.
+2020-09-10T12:01:42.129980555 25.873538s info: Table 26e8a11e-9b24-42a0-b869-85223dac94b4: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-10T12:01:47.408334555 31.151892s info: Table 6c00b0c1-8080-4e1c-9d91-27981d717d9d: Starting a new Raft election for term 1.
+2020-09-10T12:01:47.408652415 31.152210s info: Table 6c00b0c1-8080-4e1c-9d91-27981d717d9d: Added replica on this server.
+2020-09-10T12:01:47.575796770 31.319354s info: Table 6c00b0c1-8080-4e1c-9d91-27981d717d9d: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-10T12:01:52.420677216 36.164235s info: Table 39c4d5f3-42c5-4fde-bee2-055bc560b789: Added replica on this server.
+2020-09-10T12:01:52.420733570 36.164291s info: Table 39c4d5f3-42c5-4fde-bee2-055bc560b789: Starting a new Raft election for term 1.
+2020-09-10T12:01:52.587718617 36.331276s info: Table 39c4d5f3-42c5-4fde-bee2-055bc560b789: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-10T12:01:57.520484294 41.264042s info: Table 15b6a01e-2bb3-41be-9147-4a16f9bcacab: Starting a new Raft election for term 1.
+2020-09-10T12:01:57.520702199 41.264259s info: Table 15b6a01e-2bb3-41be-9147-4a16f9bcacab: Added replica on this server.
+2020-09-10T12:01:57.682725117 41.426283s info: Table 15b6a01e-2bb3-41be-9147-4a16f9bcacab: This server is Raft leader for term 1. Latest log index is 0.
+2020-09-10T16:10:51.514223246 14310.609458s notice: Someone asked for the nonwhitelisted file "/scrape".  If this should be accessible, add it to the static web assets.
+2020-09-10T16:11:11.241895170 14330.337130s notice: Someone asked for the nonwhitelisted file "/scrape".  If this should be accessible, add it to the static web assets.
+2020-09-10T16:16:51.666187496 14670.761422s notice: Someone asked for the nonwhitelisted file "/scrape".  If this should be accessible, add it to the static web assets.
+2020-09-10T16:32:20.617361681 15599.712596s notice: Someone asked for the nonwhitelisted file "/scrape".  If this should be accessible, add it to the static web assets.
+2020-09-10T16:43:20.135172842 16259.230408s notice: Server got SIGINT from pid 0, uid 0; shutting down...
+2020-09-10T16:43:20.135525687 16259.230760s notice: Shutting down client connections...
+2020-09-10T16:43:20.135775700 16259.231010s notice: All client connections closed.
+2020-09-10T16:43:20.135791914 16259.231026s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2020-09-10T16:43:20.302147401 16259.397381s notice: Storage engine shut down.
