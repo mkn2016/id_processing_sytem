@@ -473,35 +473,3 @@ class RethinkDBOperations(object):
                     self.__response["result"] = id_counter
 
             return self.__response
-
-
-if __name__ == "__main__":
-    t = {
-        "id": 3,
-        "fname":"martin",
-        "lname": "kibui",
-        "email": "m.k.ndirangu@gmail.com",
-        "password": "admin",
-        "age": 35,
-        "status": "deactivated"
-    }
-
-    db_con = {
-        "host": "localhost",
-        "port": 28015
-    }
-    rops = RethinkDBOperations(**db_con)
-    print(rops.generate_id("id_card_processing_system", "students"))
-    # print(rops.all_databases)
-    # print(rops.create_database("oi"))
-    # print(rops.all_tables("oi"))
-    # print(rops.create_table("oil", "mine"))
-    # print(rops.delete_table("oil", "mines"))
-    # print(rops.table_docs("oil", "mines"))
-    # print(rops.insert_doc_to_table("oil", "mines", t))
-    # print(rops.get_doc_by_id("id_card_processing_system", "students", 1022033))
-    # print(rops.delete_all_docs("oil", "mines"))
-    # print(rops.delete_doc_by_id("oil", "mines", 3))
-    # print(rops.count_table_docs("oil", "mines"))
-    # print(rops.filter_table_docs("oil", "mines", {"status": "deactivated"}))
-    # print(rops.count_docs_by_filter("oil", "mines", "status", "eq", "active"))
