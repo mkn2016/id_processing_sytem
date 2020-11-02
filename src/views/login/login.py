@@ -6,9 +6,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from src.config.config import BaseConfig
-from src.utils.encryption.encryption import PasswordHandler
-from src.utils.audit.audit_trails import parse_audit_logs
 from src.db.operations.db_operations import RethinkDBOperations
+from src.utils.audit.audit_trails import parse_audit_logs
+from src.utils.encryption.encryption import PasswordHandler
 
 
 class Login(QWidget, RethinkDBOperations):
@@ -19,24 +19,23 @@ class Login(QWidget, RethinkDBOperations):
         QWidget.__init__(self)
         RethinkDBOperations.__init__(self, **BaseConfig.dbcon)
 
-        self.__eid,\
-        self.__password,\
-        self.__login_btn,\
-        self.__cancel_btn,\
-        self.__login_btn_layout,\
-        self.__login_form_layout,\
-            = repeat(None, 6)
+        self.__eid, \
+        self.__password, \
+        self.__login_btn, \
+        self.__cancel_btn, \
+        self.__login_btn_layout, \
+        self.__login_form_layout, \
+        self.username, \
+        self.role = repeat(None, 8)
 
-        self.__eid_error_label,\
-        self.__password_error_label\
+        self.__eid_error_label, \
+        self.__password_error_label \
             = [QLabel() for _ in range(2)]
         self.settings = settings
         self.p = PasswordHandler()
         self.count = 0
         self.login_attempts = 3
         self.logins = []
-        self.username = None
-        self.role = None
 
         self.on_load()
 
@@ -173,7 +172,8 @@ class Login(QWidget, RethinkDBOperations):
                             if verification[1] == "Verification mismatch":
                                 print(self.count)
                                 result = self.login_attempts - self.count
-                                QMessageBox.critical(self, "Critical", "Logged in failed. \n{0} login attempts remaining.".format(result))
+                                QMessageBox.critical(self, "Critical",
+                                                     "Logged in failed. \n{0} login attempts remaining.".format(result))
                                 self.reset()
                                 self.__eid.setFocus()
                                 self.count += 1
@@ -223,7 +223,8 @@ class Login(QWidget, RethinkDBOperations):
                         self.close()
                 else:
                     self.reset()
-                    QMessageBox.critical(self, "Critical", "Your account has been suspended or deactivated. Contact admin for further information.\n")
+                    QMessageBox.critical(self, "Critical",
+                                         "Your account has been suspended or deactivated. Contact admin for further information.\n")
                     self.__eid.setFocus()
                     self.close()
 

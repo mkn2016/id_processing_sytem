@@ -1,3 +1,4 @@
+from itertools import repeat
 from typing import NoReturn
 
 from PyQt5.QtCore import *
@@ -29,7 +30,7 @@ class MainWindow(QMainWindow, RethinkDBOperations):
         self.username, \
         self.full_name, \
         self.role, \
-        self.time_display = [None for _ in range(9)]
+        self.time_display = repeat(None, 9)
         self.settings = settings
 
         self.load_ui()

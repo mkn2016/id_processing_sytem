@@ -1,9 +1,10 @@
-from typing import NoReturn
 from datetime import datetime
+from itertools import repeat
+from typing import NoReturn
 
+from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
 
 from src.config.config import BaseConfig
 from src.db.operations.db_operations import RethinkDBOperations
@@ -15,22 +16,22 @@ class CoursesPage(QWidget, RethinkDBOperations):
         QWidget.__init__(self)
         RethinkDBOperations.__init__(self, **BaseConfig.dbcon)
 
-        self.__form_widget = None
-        self.__form_layout = None
-        self.__table = None
-        self.__frame = None
-        self.__header = None
-        self.__container = None
-        self.__main_layout = None
-        self.__holder_layout = None
-        self.__title = None
-        self.__level = None
-        self.__abbreviation = None
-        self.__submit_btn = None
-        self.__item_id = None
-        self.__button_widget = None
-        self.__button_layout = None
-        self.__cancel_btn = None
+        self.__form_widget, \
+        self.__form_layout, \
+        self.__table, \
+        self.__frame, \
+        self.__header, \
+        self.__container, \
+        self.__main_layout, \
+        self.__holder_layout, \
+        self.__title, \
+        self.__level, \
+        self.__abbreviation, \
+        self.__submit_btn, \
+        self.__item_id, \
+        self.__button_widget, \
+        self.__button_layout, \
+        self.__cancel_btn = repeat(None, 15)
         self.__edit_event = False
         self.__add_event = True
 
@@ -337,11 +338,11 @@ class CoursesPage(QWidget, RethinkDBOperations):
         self.__cancel_btn.clicked.connect(self.reset)
 
     def setup_button_widget(self) -> NoReturn:
-        self.__button_widget.setContentsMargins(0,0,0,0)
+        self.__button_widget.setContentsMargins(0, 0, 0, 0)
         self.__button_widget.setLayout(self.__button_layout)
 
     def setup_button_layout(self) -> NoReturn:
-        self.__button_layout.setContentsMargins(0,0,0,0)
+        self.__button_layout.setContentsMargins(0, 0, 0, 0)
 
     def on_submit(self) -> NoReturn:
         if self.__edit_event:
@@ -355,7 +356,8 @@ class CoursesPage(QWidget, RethinkDBOperations):
             else:
                 doc = self.get_doc_by_id(BaseConfig.db, BaseConfig.courses_table, int(self.__item_id))
 
-                if title == doc["result"]["title"] and level == doc["result"]["level"] and abbreviation == doc["result"]["abbreviation"]:
+                if title == doc["result"]["title"] and level == doc["result"]["level"] and abbreviation == \
+                        doc["result"]["abbreviation"]:
                     QMessageBox.critical(self, "Critical",
                                          "Item in database is the same as the inputs. Nothing to update. Skipping editing.")
                 else:
@@ -365,7 +367,7 @@ class CoursesPage(QWidget, RethinkDBOperations):
                         "level": level,
                         "abbreviation": abbreviation,
                         "title": title,
-                        "course_title": self.__abbreviation.currentText()+title,
+                        "course_title": self.__abbreviation.currentText() + title,
                         "date_modified": datetime.today().strftime("%d-%m-%Y %H:%M:%S")
                     }
 
@@ -393,7 +395,7 @@ class CoursesPage(QWidget, RethinkDBOperations):
                         "title": title,
                         "level": self.__level.currentText(),
                         "abbreviation": self.__abbreviation.currentText(),
-                        "course_title": self.__abbreviation.currentText()+title,
+                        "course_title": self.__abbreviation.currentText() + title,
                         "date_created": datetime.today().strftime("%d-%m-%Y %H:%M:%S"),
                         "date_modified": datetime.today().strftime("%d-%m-%Y %H:%M:%S")
 

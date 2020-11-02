@@ -1,20 +1,21 @@
 from datetime import datetime
-from typing import NoReturn
-from threading import Thread
-from queue import Queue
+from itertools import repeat
 from pathlib import Path
+from queue import Queue
+from threading import Thread
+from typing import NoReturn
 
-from rethinkdb import r
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from rethinkdb import r
 
 from src.config.config import BaseConfig
-from src.views.students import dated, end_dated
-from src.utils.sms.sms import AfricasTalkingSMS
+from src.db.operations.db_operations import RethinkDBOperations
 from src.utils.messenger.message_parser import Messenger
 from src.utils.qrcode.qrcode_encoder import encode_data_to_file
-from src.db.operations.db_operations import RethinkDBOperations
+from src.utils.sms.sms import AfricasTalkingSMS
+from src.views.students import end_dated
 
 
 class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
@@ -23,73 +24,73 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
         RethinkDBOperations.__init__(self, **BaseConfig.dbcon)
         AfricasTalkingSMS.__init__(self)
 
-        self.__tel = None
-        self.__zip = None
-        self.__city = None
-        self.__email = None
-        self.__state = None
-        self.__course = None
-        self.__branch = None
-        self.__status = None
-        self.__country = None
-        self.__country = None
-        self.__surname = None
-        self.__save_btn = None
-        self.__address1 = None
-        self.__male = None
-        self.__female = None
-        self.__tel_email_errors_widget = None
-        self.__tel_email_errors_layout = None
-        self.__tel_error_label = None
-        self.__email_error_label = None
-        self.__address2 = None
-        self.__dob_label = None
-        self.__first_name = None
-        self.__dob_layout = None
-        self.__dob_widget = None
-        self.__department = None
-        self.__middle_name = None
-        self.__id_passport = None
-        self.__main_layout = None
-        self.__main_layout = None
-        self.__day_combobox = None
-        self.__names_widget = None
-        self.__names_layout = None
-        self.__status_widget = None
-        self.__status_layout = None
-        self.__gender_widget = None
-        self.__gender_layout = None
-        self.__year_combobox = None
-        self.__address_widget = None
-        self.__address_layout = None
-        self.__month_combobox = None
-        self.__gender_dob_widget = None
-        self.__gender_dob_layout = None
-        self.__school_info_layout = None
-        self.__contact_info_layout = None
-        self.__names_errors_widget = None
-        self.__names_errors_layout = None
-        self.__button_group_layout = None
-        self.__gender_dob_errors_widget = None
-        self.__gender_dob_errors_layout = None
-        self.__gender_error_label = None
-        self.__dob_error_label = None
-        self.__personal_info_layout = None
-        self.__last_name_error_label = None
-        self.__city_state_zip_layout = None
-        self.__city_state_zip_widget = None
-        self.__school_info_group_box = None
-        self.__contact_info_group_box = None
-        self.__contact_info_group_box = None
-        self.__first_name_error_label = None
-        self.__personal_info_group_box = None
-        self.__id_passport_error_label = None
-        self.__country_tel_email_layout = None
-        self.__country_tel_email_widget = None
-        self.__course_department_branch_layout = None
-        self.__course_department_branch_widget = None
-        self.__credit__points = None
-        self.__current_status = None
+        self.__tel, \
+        self.__zip, \
+        self.__city, \
+        self.__email, \
+        self.__state, \
+        self.__course, \
+        self.__branch, \
+        self.__status, \
+        self.__country, \
+        self.__country, \
+        self.__surname, \
+        self.__save_btn, \
+        self.__address1, \
+        self.__male, \
+        self.__female, \
+        self.__tel_email_errors_widget, \
+        self.__tel_email_errors_layout, \
+        self.__tel_error_label, \
+        self.__email_error_label, \
+        self.__address2, \
+        self.__dob_label, \
+        self.__first_name, \
+        self.__dob_layout, \
+        self.__dob_widget, \
+        self.__department, \
+        self.__middle_name, \
+        self.__id_passport, \
+        self.__main_layout, \
+        self.__main_layout, \
+        self.__day_combobox, \
+        self.__names_widget, \
+        self.__names_layout, \
+        self.__status_widget, \
+        self.__status_layout, \
+        self.__gender_widget, \
+        self.__gender_layout, \
+        self.__year_combobox, \
+        self.__address_widget, \
+        self.__address_layout, \
+        self.__month_combobox, \
+        self.__gender_dob_widget, \
+        self.__gender_dob_layout, \
+        self.__school_info_layout, \
+        self.__contact_info_layout, \
+        self.__names_errors_widget, \
+        self.__names_errors_layout, \
+        self.__button_group_layout, \
+        self.__gender_dob_errors_widget, \
+        self.__gender_dob_errors_layout, \
+        self.__gender_error_label, \
+        self.__dob_error_label, \
+        self.__personal_info_layout, \
+        self.__last_name_error_label, \
+        self.__city_state_zip_layout, \
+        self.__city_state_zip_widget, \
+        self.__school_info_group_box, \
+        self.__contact_info_group_box, \
+        self.__contact_info_group_box, \
+        self.__first_name_error_label, \
+        self.__personal_info_group_box, \
+        self.__id_passport_error_label, \
+        self.__country_tel_email_layout, \
+        self.__country_tel_email_widget, \
+        self.__course_department_branch_layout, \
+        self.__course_department_branch_widget, \
+        self.__credit__points, \
+        self.__current_status = repeat(None, 66)
 
         self.load_ui()
 
@@ -405,7 +406,7 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
         days = []
         for day in range(1, 32):
             if day < 10:
-                days.append("0"+str(day))
+                days.append("0" + str(day))
             else:
                 days.append(str(day))
 
@@ -570,7 +571,34 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
         self.__zip.setPlaceholderText("Zip...")
 
     def setup_country(self) -> NoReturn:
-        countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"]
+        countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua & Barbuda",
+                     "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
+                     "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
+                     "Bosnia & Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria",
+                     "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile",
+                     "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia",
+                     "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica",
+                     "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia",
+                     "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia",
+                     "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece",
+                     "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana",
+                     "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
+                     "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan",
+                     "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
+                     "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi",
+                     "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco",
+                     "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands",
+                     "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway",
+                     "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines",
+                     "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda",
+                     "Saint Pierre & Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia",
+                     "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea",
+                     "Spain", "Sri Lanka", "St Kitts & Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan",
+                     "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania",
+                     "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad & Tobago", "Tunisia", "Turkey",
+                     "Turkmenistan", "Turks & Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
+                     "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia",
+                     "Zimbabwe"]
 
         self.__country.setFixedHeight(25)
         self.__country.setContentsMargins(0, 0, 0, 0)
@@ -600,7 +628,7 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
             """
         )
         courses = [course["course_title"] for course in
-                       self.table_docs(BaseConfig.db, BaseConfig.courses_table)]
+                   self.table_docs(BaseConfig.db, BaseConfig.courses_table)]
         self.__course.addItems(courses)
 
     def setup_department(self) -> NoReturn:
@@ -610,7 +638,8 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
             border-radius: 1
             """
         )
-        departments = [department["title"] for department in self.table_docs(BaseConfig.db, BaseConfig.departments_table)]
+        departments = [department["title"] for department in
+                       self.table_docs(BaseConfig.db, BaseConfig.departments_table)]
         self.__department.addItems(departments)
 
     def setup_branch(self) -> NoReturn:
@@ -885,7 +914,7 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
         self.update_doc(BaseConfig.db, BaseConfig.files_table, doc_to_update, self.__student_id)
 
     def on_submit(self) -> NoReturn:
-        gender = None
+        gender, \
         first_name = self.__first_name.text()
         middle_name = self.__middle_name.text()
         surname = self.__surname.text()
@@ -952,7 +981,6 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
                 }
                 print(self.__current_status)
                 print(status)
-
 
                 qrcode_data = {"student_id": self.__student_id, "status": doc_to_be_updated["status"],
                                "expiry_date": doc_to_be_updated["expiry_date"], "credit__points": self.__credit__points}

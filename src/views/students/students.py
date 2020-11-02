@@ -1,22 +1,23 @@
-from typing import NoReturn
-from threading import Thread
-from queue import Queue
+from itertools import repeat
 from pathlib import Path
+from queue import Queue
+from threading import Thread
+from typing import NoReturn
 
+from PyQt5.QtChart import *
+from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtChart import *
 from rethinkdb import r
 
 from src.config.config import BaseConfig
-from src.utils.sms.sms import AfricasTalkingSMS
+from src.db.operations.db_operations import RethinkDBOperations
 from src.utils.messenger.message_parser import Messenger
+from src.utils.qrcode.qrcode_encoder import encode_data_to_file
+from src.utils.sms.sms import AfricasTalkingSMS
+from src.views.reports.reports import ReportsForm
 from src.views.students.add_students import AddStudentsForm
 from src.views.students.edit_students import EditStudentsForm
-from src.db.operations.db_operations import RethinkDBOperations
-from src.utils.qrcode.qrcode_encoder import encode_data_to_file
-from src.views.reports.reports import ReportsForm
 
 
 class LoadingScreen(QDialog):
@@ -45,21 +46,21 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
         RethinkDBOperations.__init__(self, **BaseConfig.dbcon)
         AfricasTalkingSMS.__init__(self)
 
-        self.__doc,\
-        self.__result,\
-        self.__frame,\
-        self.__header,\
-        self.__container,\
-        self.__searchbar,\
-        self.__student_id,\
-        self.__statistics,\
-        self.__main_layout,\
-        self.__search_input,\
-        self.__students_table,\
-        self.__all_students_count,\
-        self.__active_students_count,\
-        self.__pending_students_count,\
-        self.__deactivated_students_count = [None for _ in range(15)]
+        self.__doc, \
+        self.__result, \
+        self.__frame, \
+        self.__header, \
+        self.__container, \
+        self.__searchbar, \
+        self.__student_id, \
+        self.__statistics, \
+        self.__main_layout, \
+        self.__search_input, \
+        self.__students_table, \
+        self.__all_students_count, \
+        self.__active_students_count, \
+        self.__pending_students_count, \
+        self.__deactivated_students_count = repeat(None, 15)
         self.__search_event = False
 
         self.load_ui()
@@ -206,7 +207,8 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
                 self.__students_table.setRowCount(1)
 
                 self.__students_table.setItem(0, 0, QTableWidgetItem(str(doc_result["result"]["id"])))
-                self.__students_table.setItem(0, 1, QTableWidgetItem(str(doc_result["result"]["first_name"] + " " + doc_result["result"]["surname"])))
+                self.__students_table.setItem(0, 1, QTableWidgetItem(
+                    str(doc_result["result"]["first_name"] + " " + doc_result["result"]["surname"])))
                 self.__students_table.setItem(0, 2, QTableWidgetItem(str(doc_result["result"]["branch"])))
                 self.__students_table.setItem(0, 3, QTableWidgetItem(str(doc_result["result"]["course"])))
                 self.__students_table.setItem(0, 4, QTableWidgetItem(str(doc_result["result"]["department"])))
@@ -373,7 +375,16 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
     def edit_student(self) -> NoReturn:
         self.load_student_table_data()
         edit_dialog = EditStudentsForm()
-        edit_dialog.set_messages(self.__doc["result"]["id"], self.__doc["result"]["first_name"], self.__doc["result"]["middle_name"], self.__doc["result"]["surname"], self.__doc["result"]["gender"], self.__doc["result"]["dob"], self.__doc["result"]["id_passport"], self.__doc["result"]["address1"], self.__doc["result"]["address2"], self.__doc["result"]["city"], self.__doc["result"]["state"], self.__doc["result"]["zip"], self.__doc["result"]["country"], self.__doc["result"]["tel"], self.__doc["result"]["email"], self.__doc["result"]["course"], self.__doc["result"]["department"], self.__doc["result"]["branch"], self.__doc["result"]["status"])
+        edit_dialog.set_messages(self.__doc["result"]["id"], self.__doc["result"]["first_name"],
+                                 self.__doc["result"]["middle_name"], self.__doc["result"]["surname"],
+                                 self.__doc["result"]["gender"], self.__doc["result"]["dob"],
+                                 self.__doc["result"]["id_passport"], self.__doc["result"]["address1"],
+                                 self.__doc["result"]["address2"], self.__doc["result"]["city"],
+                                 self.__doc["result"]["state"], self.__doc["result"]["zip"],
+                                 self.__doc["result"]["country"], self.__doc["result"]["tel"],
+                                 self.__doc["result"]["email"], self.__doc["result"]["course"],
+                                 self.__doc["result"]["department"], self.__doc["result"]["branch"],
+                                 self.__doc["result"]["status"])
         edit_dialog.exec_()
 
     def setup_search_input(self) -> NoReturn:
@@ -719,7 +730,8 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
             self.__all_students_count.setText(str(all_students_result["result"]))
 
     def load_active_students_count(self) -> NoReturn:
-        activated_students_result = self.count_docs_by_filter(BaseConfig.db, BaseConfig.students_table, "status", "eq", "active")
+        activated_students_result = self.count_docs_by_filter(BaseConfig.db, BaseConfig.students_table, "status", "eq",
+                                                              "active")
 
         if activated_students_result["result"] is None:
             self.__active_students_count.setText("---")
@@ -727,7 +739,8 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
             self.__active_students_count.setText(str(activated_students_result["result"]))
 
     def load_pending_students_count(self) -> NoReturn:
-        pending_students_result = self.count_docs_by_filter(BaseConfig.db, BaseConfig.students_table, "status", "eq", "pending")
+        pending_students_result = self.count_docs_by_filter(BaseConfig.db, BaseConfig.students_table, "status", "eq",
+                                                            "pending")
 
         if pending_students_result["result"] is None:
             self.__pending_students_count.setText("---")
@@ -735,7 +748,8 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
             self.__pending_students_count.setText(str(pending_students_result["result"]))
 
     def load_deactivated_students_count(self) -> NoReturn:
-        deactivated_students_result = self.count_docs_by_filter(BaseConfig.db, BaseConfig.students_table,  "status", "eq", "deactivated")
+        deactivated_students_result = self.count_docs_by_filter(BaseConfig.db, BaseConfig.students_table, "status",
+                                                                "eq", "deactivated")
         if deactivated_students_result["result"] is None:
             self.__deactivated_students_count.setText("---")
         else:
@@ -748,7 +762,7 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
             QMessageBox.critical(self, "Critical", students_docs["msg"])
         elif isinstance(students_docs, list):
             if not students_docs:
-               pass
+                pass
             else:
                 self.__students_table.clearContents()
 
@@ -817,7 +831,8 @@ class StudentsPage(QWidget, RethinkDBOperations, AfricasTalkingSMS):
                     self.__students_table.insertRow(row_no)
 
                     self.__students_table.setItem(row_no, 0, QTableWidgetItem(str(row_data["id"])))
-                    self.__students_table.setItem(row_no, 1, QTableWidgetItem(str(row_data["first_name"] + " " + row_data["surname"])))
+                    self.__students_table.setItem(row_no, 1, QTableWidgetItem(
+                        str(row_data["first_name"] + " " + row_data["surname"])))
                     self.__students_table.setItem(row_no, 2, QTableWidgetItem(str(row_data["branch"])))
                     self.__students_table.setItem(row_no, 3, QTableWidgetItem(str(row_data["course"])))
                     self.__students_table.setItem(row_no, 4, QTableWidgetItem(str(row_data["department"])))

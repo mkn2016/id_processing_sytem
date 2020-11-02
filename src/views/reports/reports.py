@@ -1,8 +1,6 @@
-from datetime import datetime
+from itertools import repeat
 from typing import NoReturn
-from pathlib import Path
 
-from rethinkdb import r
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -20,21 +18,21 @@ class ReportsForm(QDialog, RethinkDBOperations, GenerateReport):
         RethinkDBOperations.__init__(self, **BaseConfig.dbcon)
         GenerateReport.__init__(self)
 
-        self.__main_layout = None
-        self.__contact_info_layout = None
-        self.__button_group_layout = None
-        self.__personal_info_layout = None
-        self.__contact_info_group_box = None
-        self.__personal_info_group_box = None
-        self.__filter_grid_layout = None
-        self.__all_statuses = None
-        self.__active_statuses = None
-        self.__deactivated_statuses = None
-        self.__pending_statuses = None
-        self.__date_from = None
-        self.__date_to = None
-        self.__calendar_date_to = None
-        self.__calendar_date_from = None
+        self.__main_layout, \
+        self.__contact_info_layout, \
+        self.__button_group_layout, \
+        self.__personal_info_layout, \
+        self.__contact_info_group_box, \
+        self.__personal_info_group_box, \
+        self.__filter_grid_layout, \
+        self.__all_statuses, \
+        self.__active_statuses, \
+        self.__deactivated_statuses, \
+        self.__pending_statuses, \
+        self.__date_from, \
+        self.__date_to, \
+        self.__calendar_date_to, \
+        self.__calendar_date_from = repeat(None, 15)
         self.__default_state = {
             "all_statuses": True,
             "active_statuses": False,
@@ -261,7 +259,8 @@ class ReportsForm(QDialog, RethinkDBOperations, GenerateReport):
             elif self.__default_state["from_date_from_changed"] and self.__default_state["from_date_to_changed"]:
                 print("getting all statuses from date to changed and from to date changed")
             else:
-                order_by_pluck_docs = self.order_by_and_pluck_table_docs(BaseConfig.db, BaseConfig.students_table, "id", pluck_param)
+                order_by_pluck_docs = self.order_by_and_pluck_table_docs(BaseConfig.db, BaseConfig.students_table, "id",
+                                                                         pluck_param)
 
                 if order_by_pluck_docs["result"] is None:
                     QMessageBox.critical(self, "Critical", order_by_pluck_docs["msg"])
@@ -283,8 +282,11 @@ class ReportsForm(QDialog, RethinkDBOperations, GenerateReport):
             elif self.__default_state["from_date_from_changed"] and self.__default_state["from_date_to_changed"]:
                 print("getting active statuses from date to changed and from to date changed")
             else:
-                filter_and_order_by_pluck_docs = self.filter_and_order_by_and_pluck_table_docs(BaseConfig.db, BaseConfig.students_table, {"status": "active"}, "id",
-                                                                         pluck_param)
+                filter_and_order_by_pluck_docs = self.filter_and_order_by_and_pluck_table_docs(BaseConfig.db,
+                                                                                               BaseConfig.students_table,
+                                                                                               {"status": "active"},
+                                                                                               "id",
+                                                                                               pluck_param)
 
                 if filter_and_order_by_pluck_docs["result"] is None:
                     QMessageBox.critical(self, "Critical", filter_and_order_by_pluck_docs["msg"])
@@ -334,7 +336,8 @@ class ReportsForm(QDialog, RethinkDBOperations, GenerateReport):
             else:
                 filter_and_order_by_pluck_docs = self.filter_and_order_by_and_pluck_table_docs(BaseConfig.db,
                                                                                                BaseConfig.students_table,
-                                                                                               {"status": "deactivated"},
+                                                                                               {
+                                                                                                   "status": "deactivated"},
                                                                                                "id",
                                                                                                pluck_param)
 
@@ -390,7 +393,7 @@ class ReportsForm(QDialog, RethinkDBOperations, GenerateReport):
         self.setup_contact_info_groupbox()
         self.setup_calendar_date_from()
         self.setup_calendar_date_to()
-        
+
         self.add_header_to_main_layout()
         self.add_personal_info_group_box_to_layout()
         self.add_all_statuses_to_person_info_layout()

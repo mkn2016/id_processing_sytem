@@ -1,9 +1,10 @@
-from typing import NoReturn
 from datetime import datetime
+from itertools import repeat
+from typing import NoReturn
 
+from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
 
 from src.config.config import BaseConfig
 from src.db.operations.db_operations import RethinkDBOperations
@@ -15,20 +16,20 @@ class DepartmentsPage(QWidget, RethinkDBOperations):
         QWidget.__init__(self)
         RethinkDBOperations.__init__(self, **BaseConfig.dbcon)
 
-        self.__item_id,\
-        self.__form_widget,\
-        self.__button_widget,\
-        self.__button_layout,\
-        self.__form_layout,\
-        self.__table,\
-        self.__frame,\
-        self.__header,\
-        self.__container,\
-        self.__main_layout,\
-        self.__holder_layout,\
-        self.__title,\
-        self.__submit_btn,\
-        self.__cancel_btn = [None for _ in range(14)]
+        self.__item_id, \
+        self.__form_widget, \
+        self.__button_widget, \
+        self.__button_layout, \
+        self.__form_layout, \
+        self.__table, \
+        self.__frame, \
+        self.__header, \
+        self.__container, \
+        self.__main_layout, \
+        self.__holder_layout, \
+        self.__title, \
+        self.__submit_btn, \
+        self.__cancel_btn = repeat(None, 14)
         self.__edit_event = False
         self.__add_event = True
 
@@ -219,11 +220,11 @@ class DepartmentsPage(QWidget, RethinkDBOperations):
         self.__cancel_btn.clicked.connect(self.reset)
 
     def setup_button_widget(self) -> NoReturn:
-        self.__button_widget.setContentsMargins(0,0,0,0)
+        self.__button_widget.setContentsMargins(0, 0, 0, 0)
         self.__button_widget.setLayout(self.__button_layout)
 
     def setup_button_layout(self) -> NoReturn:
-        self.__button_layout.setContentsMargins(0,0,0,0)
+        self.__button_layout.setContentsMargins(0, 0, 0, 0)
 
     def showEvent(self, e) -> NoReturn:
         self.load_departments_table_data()
@@ -318,7 +319,8 @@ class DepartmentsPage(QWidget, RethinkDBOperations):
 
                     }
 
-                    doc_insert_result = self.insert_doc_to_table(BaseConfig.db, BaseConfig.departments_table, department_doc)
+                    doc_insert_result = self.insert_doc_to_table(BaseConfig.db, BaseConfig.departments_table,
+                                                                 department_doc)
 
                     if doc_insert_result["result"]:
                         QMessageBox.information(self, "Success", "Department saved successfully")

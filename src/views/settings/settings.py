@@ -1,4 +1,5 @@
 from collections import defaultdict
+from itertools import repeat
 from typing import NoReturn
 
 from PyQt5.QtCore import *
@@ -14,14 +15,14 @@ class SettingsPage(QWidget, RethinkDBOperations):
         QWidget.__init__(self)
         RethinkDBOperations.__init__(self, **BaseConfig.dbcon)
 
-        self.__frame,\
-        self.__header,\
-        self.__container,\
-        self.__main_layout,\
-        self.__form_widget,\
-        self.__form_layout,\
-        self.__tree_widget,\
-        self.__holder_layout = [None for _ in range(8)]
+        self.__frame, \
+        self.__header, \
+        self.__container, \
+        self.__main_layout, \
+        self.__form_widget, \
+        self.__form_layout, \
+        self.__tree_widget, \
+        self.__holder_layout = repeat(None, 8)
 
         self.load_ui()
 
@@ -76,7 +77,7 @@ class SettingsPage(QWidget, RethinkDBOperations):
                     top_level_item.setIcon(0, QIcon("../icons/question1.png"))
 
                     v.reverse()
-                    
+
                     for i in v:
                         if len(i) == 2:
                             sub_level_item = QTreeWidgetItem(top_level_item)
