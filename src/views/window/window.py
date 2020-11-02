@@ -1,19 +1,18 @@
 from typing import NoReturn
 
+from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
 
 from src.config.config import BaseConfig
-
-from src.views.courses.courses import CoursesPage
+from src.db.operations.db_operations import RethinkDBOperations
+from src.utils.audit.audit_trails import parse_audit_logs
 from src.views.branches.branches import BranchesPage
-from src.views.students.students import StudentsPage
+from src.views.courses.courses import CoursesPage
+from src.views.departments.departments import DepartmentsPage
 from src.views.employees.employees import EmployeesPage
 from src.views.settings.settings import SettingsPage
-from src.utils.audit.audit_trails import parse_audit_logs
-from src.views.departments.departments import DepartmentsPage
-from src.db.operations.db_operations import RethinkDBOperations
+from src.views.students.students import StudentsPage
 
 
 class MainWindow(QMainWindow, RethinkDBOperations):
@@ -27,14 +26,11 @@ class MainWindow(QMainWindow, RethinkDBOperations):
         self.tab_widget, \
         self.main_layout, \
         self.corner_tab, \
-        self.time_display = [None for _ in range(6)]
+        self.username, \
+        self.full_name, \
+        self.role, \
+        self.time_display = [None for _ in range(9)]
         self.settings = settings
-        self.username = None
-        self.full_name = None
-        self.role = None
-        self.username1 = None
-
-        QMainWindow.__init__(self)
 
         self.load_ui()
 
@@ -255,8 +251,8 @@ class MainWindow(QMainWindow, RethinkDBOperations):
         self.setCentralWidget(w)
         w.setLayout(self.main_layout)
         self.setStyleSheet(
-           """
-           """
+            """
+            """
         )
 
     @pyqtSlot(str, str)
