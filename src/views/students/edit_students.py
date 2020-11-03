@@ -90,7 +90,7 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
         self.__course_department_branch_layout, \
         self.__course_department_branch_widget, \
         self.__credit__points, \
-        self.__current_status = repeat(None, 66)
+        self.__current_status = repeat(None, 67)
 
         self.load_ui()
 
@@ -914,7 +914,7 @@ class EditStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
         self.update_doc(BaseConfig.db, BaseConfig.files_table, doc_to_update, self.__student_id)
 
     def on_submit(self) -> NoReturn:
-        gender, \
+        gender = None
         first_name = self.__first_name.text()
         middle_name = self.__middle_name.text()
         surname = self.__surname.text()

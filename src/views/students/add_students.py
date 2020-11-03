@@ -88,7 +88,7 @@ class AddStudentsForm(QDialog, RethinkDBOperations, AfricasTalkingSMS):
         self.__country_tel_email_layout, \
         self.__country_tel_email_widget, \
         self.__course_department_branch_layout, \
-        self.__course_department_branch_widget = repeat(None, 64)
+        self.__course_department_branch_widget = repeat(None, 65)
 
         self.load_ui()
 

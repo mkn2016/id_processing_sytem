@@ -6,3 +6,10 @@ This is a simple system for processing QRCodes to serve as a means of digital id
 1. cd to main folder
 2. python3 api/run.py
 3. python3 src/main.py
+
+### Screenshots
+![](screenshots/Image1.png)
+![](screenshots/Image2.png)
+![](screenshots/Image3.png)
+![](screenshots/Image4.png)
+![](screenshots/Image5.png)

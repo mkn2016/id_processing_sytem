@@ -69,6 +69,7 @@ def login():
                             "credit_points": student_doc_2["credit_points"],
                         }
                         file_name = current_app.config["STUDENT_IMAGES"] + str(session["student_id"]) + ".png"
+                        print(file_name)
 
                         encode_data_to_file(student_doc, file_name)
                         return jsonify({"data": "Login Successful. 10 Credit Points Awarded"}), 200
